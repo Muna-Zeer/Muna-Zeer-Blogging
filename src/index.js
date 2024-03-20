@@ -1,17 +1,13 @@
 const express = require("express");
-// const { sequelize } = require('./models/index.js');
 const app = express();
-
 app.use(express.json());
+const sequelize = require("./models/main");
 
-const Sequelize = require("sequelize");
+// Import all models
+const models = require("./models");
 
-const sequelizeInstance = new Sequelize("blogging_system_db", "root", "", {
-  host: "localhost",
-  dialect: "mysql",
-});
-sequelizeInstance
-  .authenticate()
+// Sync database
+sequelize.sync({ force: true })
   .then(() => {
     console.log("Database synced successfully");
     const PORT = process.env.PORT || 3000;

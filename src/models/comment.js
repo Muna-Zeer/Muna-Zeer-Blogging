@@ -1,5 +1,7 @@
-// const { sequelize } = require('./index');
+
 const { DataTypes } = require('sequelize');
+const sequelize = require('../models/main');
+
 const Comment=sequelize.define('Comment',{
     content:{
         type:DataTypes.TEXT,

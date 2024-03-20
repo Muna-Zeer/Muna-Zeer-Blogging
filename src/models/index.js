@@ -1,14 +1,8 @@
-import Sequelize from 'sequelize';
-
-const sequelizeInstance = new Sequelize('blogging_system_db', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql'
-});
+//import all files from models in index.js to export then 
 
 const User = require('./user');
 const Post = require('./post');
 const Category = require('./category');
 const Comment = require('./comment');
 
-
-module.exports = { sequelize: sequelizeInstance, User, Post, Category, Comment };
+module.exports = { User, Post, Category, Comment };

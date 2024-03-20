@@ -1,5 +1,6 @@
-// const { sequelize} = require('./index');
 const { DataTypes } = require('sequelize');
+const sequelize = require('../models/main');
+const Post =require('./post')
 const Category=sequelize.define('Category',{
     //Create columns of category table
 category:{
@@ -12,3 +13,5 @@ category:{
 })
 Category.belongsToMany(Post, { through: 'postCategoryTable' });
 module.exports=Category;
+
+
