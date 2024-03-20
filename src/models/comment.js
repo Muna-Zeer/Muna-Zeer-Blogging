@@ -1,9 +1,5 @@
-const {Sequelize,DataTypes}= require('sequelize');
-const sequelize=new Sequelize('blogging_system_db','root','',{
-    host:'localhost',
-    dialect:'mysql'
-})
-
+// const { sequelize } = require('./index');
+const { DataTypes } = require('sequelize');
 const Comment=sequelize.define('Comment',{
     content:{
         type:DataTypes.TEXT,

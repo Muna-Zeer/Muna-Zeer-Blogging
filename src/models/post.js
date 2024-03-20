@@ -1,9 +1,5 @@
-const {Sequelize,DataTypes}= require('sequelize');
-const sequelize=new Sequelize('blogging_system_db','root','',{
-    host:'localhost',
-    dialect:'mysql'
-})
-
+// const { sequelize } = require('./index');
+const { DataTypes } = require('sequelize');
 const Post=sequelize.define('POST',{
     //Create columns of post table
 title:{
@@ -25,11 +21,11 @@ publishedAt:{
 }
 
 });
-const user =require("./users.js");
+const user =require("./user.js");
 const Category=require("./category.js");
 const comment=require("./comment.js");
 
 Post.belongsTo(user);
 Post.hasMany(comment);
-belongsToMany(Category, { through: 'postCategoryTable' }); 
+Post.belongsToMany(Category, { through: 'postCategoryTable' }); 
 module.exports=Post;

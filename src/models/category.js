@@ -1,9 +1,5 @@
-const {Sequelize,DataTypes}= require('sequelize');
-const sequelize=new Sequelize('blogging_system_db','root','',{
-    host:'localhost',
-    dialect:'mysql'
-})
-
+// const { sequelize} = require('./index');
+const { DataTypes } = require('sequelize');
 const Category=sequelize.define('Category',{
     //Create columns of category table
 category:{
