@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+  />
+    <title>User List</title>
+</head>
+<body>
+    <div class="allUser">
+        <h1>List of all uses</h1>
+        <ul class="userList">
+            <% users.forEach(user=>{%>
+                <li class="userItem">
+                    <div>User Name <%= user.username %> </div>
+                    <div> Email <%= user.email %></div>
+                    <div class="actionIcons">
+                        <a href="/api/users/<%= user.id %>"><i class="fas fa-info"></i></a>
+                        <a href="/api/users/<%= user.id %>/edit"><i class="fas fa-edit"></i></a>
+                        <!-- <a href="/api/users/<%= user.id %>/delete"><i class="fas fa-trash"></i></a> -->
+
+                        <form action="/api/users/<%= user.id %>/delete" method="DELETE">
+                            <button type="submit"><i class="fas fa-trash"></i></button>
+                        </form>
+                        
+                        </div>
+                </li>
+                    <% })%>
+            
+        </ul>
+    </div>
+</body>
+</html>

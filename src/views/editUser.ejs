@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h1>Update UserInfo</h1>
+    <div class="container">
+        <div class="user-log">
+            <form action="/api/users/<%= user.id %>/update" method="post">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email">
+                <button type="submit">Submit</button>
+            </form>
+            
+            
+        </div>
+    </div> 
+</body>
+</html>

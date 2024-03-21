@@ -1,0 +1,78 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-log {
+    margin-bottom: 20px;
+}
+
+.user-log form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.user-log form input[type="text"],
+.user-log form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.user-log form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.user-log form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+.allUser{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+}
+.userList{
+    list-style: none;
+    line-height: 1.5;
+    padding: 0;
+}
+.userItem{
+    background-color: #f2f2f2;
+border: 1px solid #ccc;
+border-radius:5px ;
+padding: 10px;
+margin: 15px;
+width: 300px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+.actionIcons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 10px;
+  
+}
