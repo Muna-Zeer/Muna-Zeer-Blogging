@@ -1,12 +1,16 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title> Get Post Categories</title>
 </head>
 <body>
-    <h1>Get Post Category </h1>
-    
+    <h1>Categories for Post</h1>
+    <ul>
+        <% categories.forEach(category => { %>
+            <li><%= category.category %></li>
+        <% }); %>
+    </ul>
 </body>
-</html> -->
+</html>

@@ -16,6 +16,12 @@
                 <img src="/uploads/<%= post.imageUrl %>" alt="Image" />
                 <p>Published At: <%= post.publishedAt %></p>
                 <a href="/api/posts/<%= post.id %>/addCategory">Add Category</a>
+                <a href="/api/posts/<%= post.id %>/categories">See Category</a>
+                <a href="/api/posts/<%= post.id %>/edit">Edit</a> 
+            <form action="/api/posts/<%= post.id %>" method="post"> 
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">Trash</button>
+            </form>
             <% }); %>
         </div>
     </div>

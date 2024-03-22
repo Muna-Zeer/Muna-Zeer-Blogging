@@ -1,7 +1,7 @@
 // Import the Post model
 const { Post, Category } = require("../models");
 const fs = require("fs");
-const { Op } = require('sequelize');
+const { Op } = require("sequelize");
 module.exports.uploadFile = async (req, res) => {
   try {
     if (!req.file) {
@@ -61,25 +61,29 @@ module.exports.addPostCategory = async (req, res) => {
   try {
     const { postId } = req.params;
     const { categories } = req.body;
-    console.log("Received Categories:", categories); 
+    console.log("Received Categories:", categories);
 
     const post = await Post.findByPk(postId);
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
 
-    const createdCategories = await Promise.all(categories.map(async categoryName => {
-      const [category, created] = await Category.findOrCreate({
-        where: { category: categoryName },
-        defaults: { category: categoryName }
-      });
-      return category;
-    }))
-      
-    console.log("Selected Categories:", createdCategories); 
+    const createdCategories = await Promise.all(
+      categories.map(async (categoryName) => {
+        const [category, created] = await Category.findOrCreate({
+          where: { category: categoryName },
+          defaults: { category: categoryName },
+        });
+        return category;
+      })
+    );
+
+    console.log("Selected Categories:", createdCategories);
 
     // Filter out any null categories
-    const validCategories = createdCategories.filter(category => category !== null);
+    const validCategories = createdCategories.filter(
+      (category) => category !== null
+    );
 
     await post.addCategories(validCategories);
 
@@ -89,7 +93,6 @@ module.exports.addPostCategory = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
 
 module.exports.getCategory = async (req, res) => {
   try {
@@ -104,5 +107,76 @@ module.exports.getCategory = async (req, res) => {
   } catch (error) {
     console.error("Error fetching post:", error);
     res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports.getCategoryPost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+
+    // Find the post by its ID
+    const post = await Post.findByPk(postId);
+
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    const categories = await post.getCategories();
+
+    // res.status(200).json(categories);
+    res.render("getPostCategory", { categories });
+  } catch (error) {
+    console.error("Error getting categories for post:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+module.exports.getPostEditPage = async (req, res) => {
+  const { postId } = req.params;
+  console.log("Editing post with ID:", postId);
+
+  try {
+    const post = await Post.findByPk(postId);
+
+    if (!post) {
+      console.error("Post not found");
+      return res.status(404).json({ error: "post not found" });
+    }
+
+    res.render("updatePost", { post });
+  } catch (error) {
+    console.error("Error getting post by ID:", error);
+    res.status(500).json({ error: "Unable to fetch post" });
+  }
+};
+
+module.exports.updatePostInfo = async (req, res) => {
+  const { postId } = req.params;
+  console.log("Updating post with ID:", postId);
+  console.log("Request body:", req.body);
+
+  try {
+    // Check if the post exists
+    const post = await Post.findByPk(postId);
+    if (!post) {
+      console.error("Post not found");
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    // Update the post
+    const [updatedRowsCount, updatedPost] = await Post.update(req.body, {
+      where: { id: postId },
+      returning: true,
+    });
+
+    if (updatedRowsCount === 0) {
+      console.error("Post not found");
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    console.log("Post updated successfully:", updatedPost);
+    res.status(200).json({message:"success update the post",post});
+  } catch (error) {
+    console.error("Error updating post:", error);
+    res.status(500).json({ error: "Unable to update post" });
   }
 };

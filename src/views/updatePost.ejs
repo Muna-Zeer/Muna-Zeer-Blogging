@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles.css">
+
+</head>
+<body>
+    <h1>Update Post</h1>
+    <form action="/api/posts/<%= post.id %>" method="post">
+        <input type="hidden" name="_method" value="PUT">
+        <label for="title">Title:</label>
+        <input type="text" name="title" id="title" value="<%= post.title %>" />
+        <label for="content">Content:</label>
+        <textarea name="content" id="content" cols="30" rows="10"><%= post.content %></textarea>
+        <label for="image">Image:</label>
+        <input type="file" name="image" id="image" />
+        <label for="publishedAt">Published At:</label>
+        <input type="datetime-local" id="publishedAt" name="publishedAt" value="<%= post.publishedAt %>" />
+        <button type="submit">Update Post</button>
+    </form>
+    
+  
+</div>
+<script>
+const currentTime=new Date().toISOString.slice(0,14);
+document.getElementById("publishedAt").min=currentTime;
+</script>
+</body>
+</html>
