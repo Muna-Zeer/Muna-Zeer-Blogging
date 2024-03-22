@@ -25,7 +25,7 @@ app.use("/api/posts",postRouter);
 app.get('/', (req, res) => {
 
    
-      res.render("createPost", ); 
+      res.render("user", ); 
   
 
 });

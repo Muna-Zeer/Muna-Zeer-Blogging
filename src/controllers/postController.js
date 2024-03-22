@@ -1,5 +1,5 @@
 // Import the Post model
-const { Post, Category } = require("../models");
+const { Post, Category ,Comment} = require("../models");
 const fs = require("fs");
 const { Op } = require("sequelize");
 module.exports.uploadFile = async (req, res) => {
@@ -49,8 +49,18 @@ module.exports.CreatePost = async (req, res) => {
 module.exports.getAllPost = async (req, res) => {
   try {
     const allPosts = await Post.findAll();
-    // Pass the correct variable name 'posts' to the template
+   
     res.render("postList", { posts: allPosts });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error });
+  }
+};
+module.exports.getComments = async (req, res) => {
+  try {
+    const allPosts = await Post.findAll();
+  
+    res.render("commentPost", { posts: allPosts });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error });
@@ -178,5 +188,59 @@ module.exports.updatePostInfo = async (req, res) => {
   } catch (error) {
     console.error("Error updating post:", error);
     res.status(500).json({ error: "Unable to update post" });
+  }
+};
+
+
+//delete Post
+module.exports.deletePost = async (req, res) => {
+  const { postId } = req.params;
+
+  try {
+    const post = await Post.findByPk(postId);
+
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    await post.destroy();
+
+    res.status(200).json({ message: "Post deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    res.status(500).json({ error: "Unable to delete post" });
+  }
+};
+
+
+//Create new comment for specific postId
+
+module.exports.createComment=async(req,res)=>{
+  const{postId}=req.params;
+  const {content}=req.body;
+  try {
+    const comment=await Comment.create({
+      PostId:postId,
+      content,
+    });
+    res.status(201).json({ message: 'Comment created successfully', comment });
+  } catch (error) {
+    console.error('Error creating comment:', error);
+    res.status(500).json({ error: 'Unable to create comment' });
+  }
+}
+
+
+//Get comments for specific post 
+module.exports.getCommentsPost = async (req, res) => {
+  const { postId } = req.params;
+  console.log("Post ID:", postId); // Log postId
+  try {
+    const comments = await Comment.findAll({ where: { postId } });
+    console.log("Comments:", comments); // Log comments
+    res.status(200).json({ comments });
+  } catch (error) {
+    console.error('Error getting comments:', error);
+    res.status(500).json({ error: 'Unable to get comments' });
   }
 };

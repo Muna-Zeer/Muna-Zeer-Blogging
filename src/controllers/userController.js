@@ -76,19 +76,21 @@ module.exports.updateUserInfo = async (req, res) => {
 
 module.exports.deleteUserId = async (req, res) => {
   const { userId } = req.params;
-console.log("userId",userId);
-
+  console.log("Deleting user with ID:", userId);
 
   try {
-      const deletedUser = await User.destroy({ where: { id: userId } });
-      if (!deletedUser) {
-          console.log("User not found for deletion");
+      const user = await User.findByPk(userId);
+      if (!user) {
+          console.error("User not found");
           return res.status(404).json({ error: "User not found" });
       }
+
+      await user.destroy();
+
       console.log("User deleted successfully");
       res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
-      console.error("Error deleting user by ID:", error);
+      console.error("Error deleting user:", error);
       res.status(500).json({ error: "Unable to delete user" });
   }
 };
