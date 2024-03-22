@@ -21,12 +21,11 @@
                     <div class="actionIcons">
                         <a href="/api/users/<%= user.id %>"><i class="fas fa-info"></i></a>
                         <a href="/api/users/<%= user.id %>/edit"><i class="fas fa-edit"></i></a>
-                        <!-- <a href="/api/users/<%= user.id %>/delete"><i class="fas fa-trash"></i></a> -->
 
                         <form action="/api/users/<%= user.id %>/delete" method="DELETE">
+                            <!-- <input type="hidden" name="_method" value="DELETE"> -->
                             <button type="submit"><i class="fas fa-trash"></i></button>
-                        </form>
-                        
+                          </form>
                         </div>
                 </li>
                     <% })%>

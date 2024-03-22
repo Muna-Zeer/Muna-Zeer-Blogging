@@ -1,17 +1,17 @@
-const { DataTypes } = require('sequelize');
+// category.js
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../models/main');
-const Post =require('./post')
-const Category=sequelize.define('Category',{
-    //Create columns of category table
-category:{
-    type:DataTypes.STRING,
-    allowNull:false,
-    unique:true
-},
 
+class Category extends Model {}
+Category.init({
+    category: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    }
+}, {
+    sequelize,
+    modelName: 'Category'
+});
 
-})
-Category.belongsToMany(Post, { through: 'postCategoryTable' });
-module.exports=Category;
-
-
+module.exports = Category;

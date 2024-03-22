@@ -1,7 +1,10 @@
-const { DataTypes } = require('sequelize');
+// post.js
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../models/main');
+const Category = require('./category');
 
-const Post = sequelize.define('Post', {
+class Post extends Model {}
+Post.init({
     title: {
         type: DataTypes.STRING,
         allowNull: false
@@ -12,12 +15,18 @@ const Post = sequelize.define('Post', {
     },
     imageUrl: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true 
     },
     publishedAt: {
         type: DataTypes.DATE,
-        allowNull: true
-    }
+        allowNull: false,
+        defaultValue: DataTypes.NOW 
+    },
+}, {
+    sequelize,
+    modelName: 'Post'
 });
+
+Post.belongsToMany(Category, { through: 'PostCategories' });
 
 module.exports = Post;

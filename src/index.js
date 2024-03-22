@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path=require("path");
-const userRouter =require("../src/routes/router")
+const {userRouter,postRouter} =require("../src/routes/router")
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 app.use(express.json());
@@ -10,26 +10,28 @@ const sequelize = require("./models/main");
 const exp = require("constants");
 app.set('view engine',"ejs");
 const viewsPath = path.join(__dirname, 'views');
-const pathpublic=path.join(__dirname,"public");
-console.log("public file",pathpublic);
+const pathPublic=path.join(__dirname,"public");
+console.log("public file",pathPublic);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.set('views', viewsPath);
 app.set('view engine', 'ejs');
-app.use(express.static(pathpublic));
+app.use(express.static(pathPublic));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
 //Access to css file
-app.use(userRouter);
+app.use("/api/users",userRouter);
+app.use("/api/posts",postRouter);
 app.get('/', (req, res) => {
 
    
-      res.render("user", ); 
+      res.render("createPost", ); 
   
 
 });
 
 // Sync database
-sequelize.sync({ force: false })
+sequelize.sync({ alter: true })
   .then(() => {
     console.log("Database synced successfully");
     const PORT = process.env.PORT || 3000;

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h1>Add Category for specific post</h1>
+    <form action="/api/posts/<%= postId %>/categories" method="post">
+        <% const categoryNames = ["Technology", "Travel", "Food", "Fashion", "Health", "Sports", "Politician"]; %>
+        <% categoryNames.forEach(category => { %>
+            <input
+                type="checkbox"
+                name="categories"
+                id="category_<%= category %>"
+                value="<%= category %>"
+            />
+            <label for="category_<%= category %>"><%= category %></label><br />
+        <% }); %>
+        <button type="submit">Add Categories</button>
+    </form>
+</body>
+</html>
