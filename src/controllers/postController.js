@@ -1,5 +1,5 @@
 // Import the Post model
-const { Post, Category ,Comment} = require("../models");
+const { Post, Category, Comment,User } = require("../models");
 const fs = require("fs");
 const { Op } = require("sequelize");
 module.exports.uploadFile = async (req, res) => {
@@ -49,7 +49,7 @@ module.exports.CreatePost = async (req, res) => {
 module.exports.getAllPost = async (req, res) => {
   try {
     const allPosts = await Post.findAll();
-   
+
     res.render("postList", { posts: allPosts });
   } catch (error) {
     console.log(error);
@@ -59,7 +59,7 @@ module.exports.getAllPost = async (req, res) => {
 module.exports.getComments = async (req, res) => {
   try {
     const allPosts = await Post.findAll();
-  
+
     res.render("commentPost", { posts: allPosts });
   } catch (error) {
     console.log(error);
@@ -184,13 +184,12 @@ module.exports.updatePostInfo = async (req, res) => {
     }
 
     console.log("Post updated successfully:", updatedPost);
-    res.status(200).json({message:"success update the post",post});
+    res.status(200).json({ message: "success update the post", post });
   } catch (error) {
     console.error("Error updating post:", error);
     res.status(500).json({ error: "Unable to update post" });
   }
 };
-
 
 //delete Post
 module.exports.deletePost = async (req, res) => {
@@ -212,35 +211,62 @@ module.exports.deletePost = async (req, res) => {
   }
 };
 
-
 //Create new comment for specific postId
 
-module.exports.createComment=async(req,res)=>{
-  const{postId}=req.params;
-  const {content}=req.body;
+module.exports.createComment = async (req, res) => {
+  const { postId } = req.params;
+  const { content } = req.body;
   try {
-    const comment=await Comment.create({
-      PostId:postId,
+    const comment = await Comment.create({
+      PostId: postId,
       content,
     });
-    res.status(201).json({ message: 'Comment created successfully', comment });
+    res.status(201).json({ message: "Comment created successfully", comment });
   } catch (error) {
-    console.error('Error creating comment:', error);
-    res.status(500).json({ error: 'Unable to create comment' });
-  }
-}
-
-
-//Get comments for specific post 
-module.exports.getCommentsPost = async (req, res) => {
-  const { postId } = req.params;
-  console.log("Post ID:", postId); // Log postId
-  try {
-    const comments = await Comment.findAll({ where: { postId } });
-    console.log("Comments:", comments); // Log comments
-    res.status(200).json({ comments });
-  } catch (error) {
-    console.error('Error getting comments:', error);
-    res.status(500).json({ error: 'Unable to get comments' });
+    console.error("Error creating comment:", error);
+    res.status(500).json({ error: "Unable to create comment" });
   }
 };
+
+//Get comments for specific post
+module.exports.getCommentsPost = async (req, res) => {
+  const { postId } = req.params;
+  console.log("Post ID:", postId); 
+  try {
+    const comments = await Comment.findAll({ where: { postId } });
+    console.log("Comments:", comments); 
+    res.status(200).json({ comments });
+  } catch (error) {
+    console.error("Error getting comments:", error);
+    res.status(500).json({ error: "Unable to get comments" });
+  }
+};
+
+module.exports.displayPostDetails = async (req, res) => {
+  try {
+    const post = await Post.findAll({
+      include: [{ model: User }, { model: Category }, { model: Comment }],
+    });
+    res.render('postDetails',{ post });
+  } catch (error) {
+    console.error("Error getting posts with associated data:", error);
+    res.status(500).json({ error: "Unable to get posts with associated data" });
+  }
+};
+
+module.exports.getPostDetailsById=async(req,res)=>{
+  const {postId}=req.params;
+  try {
+    const post = await Post.findByPk(postId,{
+      include: [{ model: User }, { model: Category }, { model: Comment }],
+    });
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    res.status(200).json({post});
+  } catch (error) {
+    console.error('Error getting post details:', error);
+    res.status(500).json({ error: 'Unable to get post details' });
+  }
+}

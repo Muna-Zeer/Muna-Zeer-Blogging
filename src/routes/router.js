@@ -24,7 +24,9 @@ const {
   deletePost,
   createComment,
   getComments,
-  getCommentsPost
+  getCommentsPost,
+  displayPostDetails,
+  getPostDetailsById
 } = require("../controllers/postController");
 app.use(methodOverride("_method"));
 
@@ -70,4 +72,13 @@ postRouter.get("/:postId/comments", getCommentsPost);
 
 //Add comment for post
 postRouter.get("/addComment", getComments);
+
+//Get all posts with associated users, categories, and comments
+postRouter.get("/postDetails",displayPostDetails)
+postRouter.get("/:postId/postDetails",getPostDetailsById)
+
+
 module.exports = { userRouter, postRouter };
+
+
+

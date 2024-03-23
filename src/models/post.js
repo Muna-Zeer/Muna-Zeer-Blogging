@@ -2,7 +2,8 @@
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../models/main');
 const Category = require('./category');
-
+const User=require("./user")
+const Comment=require("./comment");
 class Post extends Model {}
 Post.init({
     title: {
@@ -28,5 +29,6 @@ Post.init({
 });
 
 Post.belongsToMany(Category, { through: 'PostCategories' });
-
+Post.belongsTo(User);
+Post.hasMany(Comment); 
 module.exports = Post;

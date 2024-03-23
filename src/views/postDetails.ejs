@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles.css">
+
+  </head>
+  <body>
+    <h1>Post Details</h1>
+    <div class="postContainer">
+      <% post.forEach(post => { %>
+        <a href="/api/posts/<%= post.id %>/postDetails" class="post-link">
+        <div class="post-details">
+        <h2>Title: <%= post.title %></h2>
+        <p>Content: <%= post.content %></p>
+        <img src="/uploads/<%= post.imageUrl %>" alt="Image" />
+        <p>Published At: <%= post.publishedAt %></p>
+
+        <!-- Display associated users -->
+        <h2>Associated user</h2>
+        <% if (post.User) { %>
+            <p>Username: <%= post.User.username %></p>
+            <p>Email: <%= post.User.email %></p>
+        <% } else { %>
+            <p>No associated user found.</p>
+        <% } %>
+
+
+
+        <!-- Display associated categories -->
+        <h2>Associated categories</h2>
+        <% post.Categories.forEach(category => { %>
+        <p><%= category.category %></p>
+        <% }); %>
+
+        <!-- Display associated Comments -->
+        <h2>Associated Comments</h2>
+        <% post.Comments.forEach(comment => { %>
+        <p><%= comment.content %></p>
+        <% }); %>
+        </a>
+      </div>
+        <% }); %>
+    </div>
+  </body>
+</html>

@@ -1,9 +1,11 @@
+// comment.js
+const { DataTypes, Model } = require('sequelize');
+const sequelize = require('../models/main'); 
+const Post = require("./post");
+const User = require("./user"); 
 
-const { DataTypes,Model } = require('sequelize');
-const sequelize = require('../models/main');
-const Post=require("./post")
-const Category = require('./category');
 class Comment extends Model {}
+
 Comment.init({
     content: {
         type: DataTypes.TEXT,
@@ -14,8 +16,8 @@ Comment.init({
     modelName: 'Comment'
 });
 
-// Define associations between tables
-Comment.belongsTo(Post);
-Comment.belongsTo(Category);
+// Define associations with tables
+// Comment.belongsTo(Post); 
+Comment.belongsTo(User);
 
 module.exports = Comment;

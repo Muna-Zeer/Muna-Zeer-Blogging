@@ -125,3 +125,34 @@ form input[type="submit"]{
   height: 100;
   border-radius: 5px;
 }
+
+/* post Details  */
+.postContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.post-details {
+  max-width: 400px;
+  margin: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.post-details h2 {
+  margin-top: 30px;
+  color: #333;
+}
+.post-details p {
+  margin-bottom: 10px;
+  color: #666;
+}
+.post-details img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+a  {
+  text-decoration: none;
+}

@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 });
 
 // Sync database
-sequelize.sync({ alter: false })
+sequelize.sync({ alter: true })
   .then(() => {
     console.log("Database synced successfully");
     const PORT = process.env.PORT || 3000;
