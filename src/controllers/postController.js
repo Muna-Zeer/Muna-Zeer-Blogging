@@ -1,4 +1,4 @@
-// Import the Post model
+
 const { Post, Category, Comment,User } = require("../models");
 const fs = require("fs");
 const { Op } = require("sequelize");

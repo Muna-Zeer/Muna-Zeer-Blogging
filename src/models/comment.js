@@ -18,6 +18,7 @@ Comment.init({
 
 // Define associations with tables
 // Comment.belongsTo(Post); 
-Comment.belongsTo(User);
-
+Comment.associate = () => {
+    Comment.belongsTo(User);
+  };
 module.exports = Comment;

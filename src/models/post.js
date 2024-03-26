@@ -29,6 +29,8 @@ Post.init({
 });
 
 Post.belongsToMany(Category, { through: 'PostCategories' });
-Post.belongsTo(User);
+Post.associate = () => {
+    Post.belongsTo(User);
+  };
 Post.hasMany(Comment); 
 module.exports = Post;
