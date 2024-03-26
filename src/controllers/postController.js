@@ -29,15 +29,7 @@ module.exports.CreatePost = async (req, res) => {
       imageUrl: imageUrl,
       publishedAt: req.body.publishedAt,
     });
-    // const category=await Category.create({category:req.body.categories})
-    // if(req.body.categories&&req.body.categories.length>0){
-    //   for(const categoryId of req.body.categories){
-    //     const category=Category.findByPk(categoryId);
-    //     if(category){
-    //       await newPost.addCategory(category);
-    //     }
-    //   }
-    // }
+ 
     console.log("newPost");
     res.status(201).json(newPost);
   } catch (error) {
@@ -191,7 +183,7 @@ module.exports.updatePostInfo = async (req, res) => {
   }
 };
 
-//delete Post
+//Delete Post
 module.exports.deletePost = async (req, res) => {
   const { postId } = req.params;
 
