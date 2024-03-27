@@ -1,4 +1,5 @@
-# Muna-Zeer-Blogging# Blogging System with Sequelize
+       
+# Blogging System with Sequelize
 
 ## Introduction
 
