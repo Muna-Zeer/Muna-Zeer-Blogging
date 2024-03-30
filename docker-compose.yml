@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - '3001:3000'  
+    depends_on:
+      - db
+    environment:
+      DB_USERNAME: 'root'
+      DB_PASSWORD: ''
+      DB_DATABASE: 'blogging_system_db'
+      DB_HOST: 'db' 
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: blogging_system_db  
+      MYSQL_PASSWORD: '' 
+    ports:
+      - '3307:3306'

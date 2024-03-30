@@ -8,13 +8,15 @@ app.use(express.json());
 // Import all models
 const sequelize = require("./models/main");
 const exp = require("constants");
-app.set('view engine',"ejs");
-const viewsPath = path.join(__dirname, 'views');
+
 const pathPublic=path.join(__dirname,"public");
 console.log("public file",pathPublic);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.set('views', viewsPath);
 app.set('view engine', 'ejs');
+
+// Set views directory path
+const viewsPath = path.join(__dirname, 'views');
+app.set('views', viewsPath);
 app.use(express.static(pathPublic));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
