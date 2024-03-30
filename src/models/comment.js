@@ -1,4 +1,3 @@
-// comment.js
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../models/main'); 
 const Post = require("./post");
@@ -16,9 +15,6 @@ Comment.init({
     modelName: 'Comment'
 });
 
-// Define associations with tables
-// Comment.belongsTo(Post); 
-Comment.associate = () => {
-    Comment.belongsTo(User);
-  };
+Comment.belongsTo(User); 
+
 module.exports = Comment;

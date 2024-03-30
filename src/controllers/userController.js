@@ -1,14 +1,6 @@
 //create new user
 const { User } = require("../models");
-module.exports.createNewUser = async (req, res) => {
-  try {
-    const newUser = await User.create(req.body);
-    res.status(201).json(newUser);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error });
-  }
-};
+
 //Get all users info
 module.exports.getAllUsers = async (req, res) => {
   try {

@@ -18,17 +18,20 @@ app.set('view engine', 'ejs');
 app.use(express.static(pathPublic));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
-
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
 //Access to css file
 app.use("/api/users",userRouter);
 app.use("/api/posts",postRouter);
 app.get('/', (req, res) => {
 
-   
-      res.render("createPost", ); 
+  // createPost
+  // users
+      res.render("createPost"); 
   
 
 });
+
 
 // Sync database
 sequelize.sync({ alter: true })

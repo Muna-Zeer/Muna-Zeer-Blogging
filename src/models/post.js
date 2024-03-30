@@ -1,10 +1,11 @@
-// post.js
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../models/main');
 const Category = require('./category');
-const User=require("./user")
-const Comment=require("./comment");
+const Comment = require('./comment');
+const User = require('./user');
+
 class Post extends Model {}
+
 Post.init({
     title: {
         type: DataTypes.STRING,
@@ -16,21 +17,20 @@ Post.init({
     },
     imageUrl: {
         type: DataTypes.STRING,
-        allowNull: true 
+        allowNull: true
     },
     publishedAt: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW 
+        defaultValue: DataTypes.NOW
     },
 }, {
     sequelize,
     modelName: 'Post'
 });
 
+Post.belongsTo(User, { foreignKey: 'userId' }); 
 Post.belongsToMany(Category, { through: 'PostCategories' });
-Post.associate = () => {
-    Post.belongsTo(User);
-  };
 Post.hasMany(Comment); 
+
 module.exports = Post;

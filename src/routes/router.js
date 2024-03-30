@@ -6,13 +6,13 @@ const path = require("path");
 const multer = require("multer");
 const { Post } = require("../models");
 const {
-  createNewUser,
   getAllUsers,
   getUserByID,
   updateUserInfo,
   deleteUserId,
   getUserEditPage,
 } = require("../controllers/userController");
+const {createNewUser,loginUser,verifyUserIdToken,verifyToken}=require("../controllers/authController")
 const {
   CreatePost,
   getAllPost,
@@ -28,6 +28,7 @@ const {
   displayPostDetails,
   getPostDetailsById
 } = require("../controllers/postController");
+
 app.use(methodOverride("_method"));
 
 const uploadDirectory = path.join(__dirname, "../uploads");
@@ -50,32 +51,35 @@ const upload = multer({ storage: storage });
 const userRouter = express.Router();
 const postRouter = express.Router();
 userRouter.post("/createUser", createNewUser);
+
+
+userRouter.post('/loginUser', loginUser);
 userRouter.get("/allUsers", getAllUsers);
 
-userRouter.get("/:userId", getUserByID);
-userRouter.get("/:userId/edit", getUserEditPage);
+userRouter.get("/:userId",verifyToken, getUserByID);
+userRouter.get("/:userId/edit", verifyToken,getUserEditPage);
 
-userRouter.post("/:userId/update", updateUserInfo);
-userRouter.delete("/:userId", deleteUserId);
+userRouter.post("/:userId/update", verifyToken,updateUserInfo);
+userRouter.delete("/:userId",verifyToken, deleteUserId);
 
 //Post routes
 postRouter.post("/newPost", upload.single("image"), CreatePost);
 postRouter.get("/allPosts", getAllPost);
-postRouter.post("/:postId/categories", addPostCategory);
-postRouter.get("/:postId/addCategory", getCategory);
-postRouter.get("/:postId/categories", getCategoryPost);
-postRouter.get("/:postId/edit", getPostEditPage);
-postRouter.post("/:postId", updatePostInfo);
-postRouter.delete("/:postId", deletePost);
-postRouter.post("/:postId/comments", createComment);
-postRouter.get("/:postId/comments", getCommentsPost);
+postRouter.post("/:postId/categories", verifyToken,addPostCategory);
+postRouter.get("/:postId/addCategory", verifyToken,getCategory);
+postRouter.get("/:postId/categories",verifyToken, getCategoryPost);
+postRouter.get("/:postId/edit",verifyToken, getPostEditPage);
+postRouter.post("/:postId",verifyToken, updatePostInfo);
+postRouter.delete("/:postId", verifyToken,deletePost);
+postRouter.post("/:postId/comments",verifyToken, createComment);
+postRouter.get("/:postId/comments", verifyToken,getCommentsPost);
 
 //Add comment for post
 postRouter.get("/addComment", getComments);
 
 //Get all posts with associated users, categories, and comments
-postRouter.get("/postDetails",displayPostDetails)
-postRouter.get("/:postId/postDetails",getPostDetailsById)
+postRouter.get("/postDetails",verifyToken,displayPostDetails)
+postRouter.get("/:postId/postDetails",verifyToken,getPostDetailsById)
 
 
 module.exports = { userRouter, postRouter };

@@ -28,6 +28,7 @@ module.exports.CreatePost = async (req, res) => {
       content: req.body.content,
       imageUrl: imageUrl,
       publishedAt: req.body.publishedAt,
+      // userId: req.user.id, 
     });
  
     console.log("newPost");
@@ -236,10 +237,13 @@ module.exports.getCommentsPost = async (req, res) => {
 
 module.exports.displayPostDetails = async (req, res) => {
   try {
+    const token = req.cookies.token; 
+    console.log("Token:", token); 
     const post = await Post.findAll({
       include: [{ model: User }, { model: Category }, { model: Comment }],
     });
     res.render('postDetails',{ post });
+    console.log("reg",req);
   } catch (error) {
     console.error("Error getting posts with associated data:", error);
     res.status(500).json({ error: "Unable to get posts with associated data" });
@@ -248,6 +252,7 @@ module.exports.displayPostDetails = async (req, res) => {
 
 module.exports.getPostDetailsById=async(req,res)=>{
   const {postId}=req.params;
+  console.log("reg",req);
   try {
     const post = await Post.findByPk(postId,{
       include: [{ model: User }, { model: Category }, { model: Comment }],

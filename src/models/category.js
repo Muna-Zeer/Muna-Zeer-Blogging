@@ -6,8 +6,8 @@ class Category extends Model {}
 Category.init({
     category: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
+        allowNull: true,
+        unique: false
     }
 }, {
     sequelize,

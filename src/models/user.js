@@ -1,3 +1,4 @@
+// user.js
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../models/main');
 
@@ -16,6 +17,7 @@ User.init({
                 msg: "Invalid email format",
             },
         },
+        unique:true,
     },
     password: {
         type: DataTypes.STRING,
@@ -25,5 +27,9 @@ User.init({
     sequelize,
     modelName: 'User'
 });
+
+User.associate = (models) => {
+    User.hasMany(models.Post, { foreignKey: 'userId' });
+};
 
 module.exports = User;
