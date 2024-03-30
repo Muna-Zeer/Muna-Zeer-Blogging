@@ -8,22 +8,24 @@
   </head>
   <body>
     <h1>Add comments for post</h1>
-    <div class="allPosts">
-      <% posts.forEach(post => { %>
-      <div class="postCard">
-        <h2>Title: <%= post.title %></h2>
-        <p>Content: <%= post.content %></p>
-        <img src="/uploads/<%= post.imageUrl %>" alt="Image" />
-        <p>Published At: <%= post.publishedAt %></p>
+<div class="allPosts">
+  <% posts.forEach(post => { %>
+  <div class="postContainer">
+    <div class="postCard">
+      <h2>Title: <%= post.title %></h2>
+      <p>Content: <%= post.content %></p>
+      <img src="/uploads/<%= post.imageUrl %>" alt="Image" />
+      <p>Published At: <%= post.publishedAt %></p>
 
-        <!-- Form to add comments for post based on the id -->
-        <form action="/api/posts/<%= post.id %>/comments" method="POST">
-          <label for="content">Comment:</label>
-          <textarea name="content" id="content" cols="20" rows="10"></textarea>
-          <button type="submit">Add Comment</button>
-        </form>
-        <% }); %>
-      </div>
+      <form action="/api/posts/<%= post.id %>/comments" method="POST">
+        <label for="content">Comment:</label>
+        <textarea name="content" id="content" cols="20" rows="10"></textarea>
+        <button type="submit">Add Comment</button>
+      </form>
     </div>
+  </div>
+  <% }); %>
+</div>
+
   </body>
 </html>

@@ -23,11 +23,24 @@ app.use(cookieParser());
 //Access to css file
 app.use("/api/users",userRouter);
 app.use("/api/posts",postRouter);
+app.get('/user', (req, res) => {
+  res.render('user');
+});
+
+app.get('/login', (req, res) => {
+  res.render('loginUserPage');
+});
+
+app.get('/createPost', (req, res) => {
+  res.render('createPost');
+});
+
 app.get('/', (req, res) => {
 
   // createPost
   // users
-      res.render("createPost"); 
+  res.render('layout/index');
+
   
 
 });

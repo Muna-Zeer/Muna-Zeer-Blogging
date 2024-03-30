@@ -104,27 +104,64 @@ form input[type="submit"]{
   padding: 10px;
 }
 
-/* post Lsit style */
+/* post List style */
+/* post List style */
 .allPosts {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  justify-content: space-around; /* Adjust as needed */
+  flex-direction: row; /* Add this line */
 }
 
 .postCard {
-  width: 200px;
+  width: 300px; /* Adjust as needed */
+  margin: 20px;
+  padding: 15px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 20px;
-  height: 400px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.postCard h2 {
+  margin-bottom: 10px;
 }
 
 .postCard img {
-  max-width: 50%;
-  height: 100;
-  border-radius: 5px;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
+
+.postCard form {
+  margin-top: 15px;
+}
+
+.postCard label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.postCard textarea {
+  width: 100%;
+  height: 80px; /* Adjust as needed */
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.postCard button {
+  padding: 8px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.postCard button:hover {
+  background-color: #0056b3;
+}
+
 
 /* post Details  */
 .postContainer {
@@ -155,4 +192,183 @@ form input[type="submit"]{
 }
 a  {
   text-decoration: none;
+}
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header h1 {
+  margin: 0;
+}
+nav {
+  display: flex;
+  gap: 20px;
+}
+nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+nav a:hover {
+  background-color: #555;
+}
+form {
+ 
+  max-width: 500px; 
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+textarea,
+input[type="file"],
+input[type="datetime-local"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 14px;
+}
+
+
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #333;
+  padding-top: 20px;
+  color: #fff;
+}
+
+.sidebar h1 {
+  text-align: center;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  padding: 10px;
+  text-align: center;
+  background-color: #fff; 
+}
+
+.sidebar li:hover {
+  background-color: #555;
+  cursor: pointer;
+}
+
+/* Icons */
+
+.infoIcon {
+  color: blue; 
+}
+
+.editIcon {
+  color: green; 
+}
+
+/* Delete button styles */
+.deleteButton {
+  /* background-color: transparent;  */
+  border: none; 
+  padding: 0; 
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  color: red; 
+}
+
+.deleteButton i {
+  font-size: 20px;
+}
+
+
+.actionIcons i {
+  font-size: 20px; 
+  margin-right: 10px; 
 }

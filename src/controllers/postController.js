@@ -1,6 +1,7 @@
 
 const { Post, Category, Comment,User } = require("../models");
 const fs = require("fs");
+const jwt = require("jsonwebtoken");
 const { Op } = require("sequelize");
 module.exports.uploadFile = async (req, res) => {
   try {
@@ -235,15 +236,47 @@ module.exports.getCommentsPost = async (req, res) => {
   }
 };
 
+// module.exports.displayPostDetails = async (req, res) => {
+//   try {
+//     const token = req.cookies.token; 
+//     console.log("Token:", token); 
+//     const decodedToken = jwt.decode(token);
+//     const username = decodedToken.username;
+//     console.log("Username:", username); 
+//     const post = await Post.findAll({
+//       include: [{ model: User, where: { username } }, { model: Category }, { model: Comment }],
+//     });
+//     res.render('postDetails', { post });
+//     console.log("reg", req);
+//   } catch (error) {
+//     console.error("Error getting posts with associated data:", error);
+//     res.status(500).json({ error: "Unable to get posts with associated data" });
+//   }
+// };
+
 module.exports.displayPostDetails = async (req, res) => {
   try {
-    const token = req.cookies.token; 
-    console.log("Token:", token); 
+    const token = req.cookies.token;
+    
+    if (!token) {
+      throw new Error('Token not found');
+    }
+
+    const decodedToken = jwt.decode(token);
+    
+    if (!decodedToken || !decodedToken.username) {
+      throw new Error('Invalid token or username not found');
+    }
+
+    const username = decodedToken.username;
+
     const post = await Post.findAll({
       include: [{ model: User }, { model: Category }, { model: Comment }],
     });
-    res.render('postDetails',{ post });
-    console.log("reg",req);
+    
+    res.render('postDetails', { post, username });
+    
+    console.log("reg", req);
   } catch (error) {
     console.error("Error getting posts with associated data:", error);
     res.status(500).json({ error: "Unable to get posts with associated data" });

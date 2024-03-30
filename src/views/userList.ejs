@@ -19,14 +19,13 @@
                     <div>User Name <%= user.username %> </div>
                     <div> Email <%= user.email %></div>
                     <div class="actionIcons">
-                        <a href="/api/users/<%= user.id %>"><i class="fas fa-info"></i></a>
-                        <a href="/api/users/<%= user.id %>/edit"><i class="fas fa-edit"></i></a>
-
-                        <form id="deleteForm_<%= user.id %>" action="/api/users/<%= user.id %>" method="DELETE">
+                        <a href="/api/users/<%= user.id %>"><i class="fas fa-info-circle infoIcon"></i></a>
+                        <a href="/api/users/<%= user.id %>/edit"><i class="fas fa-pencil-alt editIcon"></i></a>
+                        <form id="deleteForm_<%= user.id %>" action="/api/users/<%= user.id %>" method="DELETE" class="deleteForm">
                             <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" onclick="deleteUser('<%= user.id %>')">Trash</button>
-                        </form>
-                        </div>
+                            <button type="submit" onclick="deleteUser('<%= user.id %>')" class="deleteButton"><i class="fas fa-trash-alt trashIcon"></i></button>
+                          </form>
+                      </div>
                 </li>
                     <% })%>
             
