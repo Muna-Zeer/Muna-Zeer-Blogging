@@ -16,11 +16,24 @@ This project is a backend RESTful API for a blogging system that utilizes Sequel
 - Express.js
 - Sequelize (with MySQL database)
 
-### Prerequisites:
-- Node.js installed on your machine
-- MySQL database created with necessary configurations
-- Basic understanding of JavaScript and Node.js
+## Installation
+To run the project locally, follow these steps:
 
+1. clone the repository:
+```
+git clone https://github.com/Muna-Zeer/Muna-Zeer-Blogging.git
+```
+2. Install dependencies:
+```
+npm  install 
+```
+
+3. Build and run the project
+```
+npm run build
+npm start
+```
+* This will build the JavaScript code and start the Express server.
 ## Suggested API Structure
 
 ### /api/users
@@ -42,6 +55,8 @@ This project is a backend RESTful API for a blogging system that utilizes Sequel
 - GET /:postId/comments: Get comments for a specific post
 
 ...
+### ERD of the blogging system of the users
 
+![Blogging diagram](./blogging.drawio.png)
 
 

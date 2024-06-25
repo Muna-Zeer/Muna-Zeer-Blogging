@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
-//Access to css file
+//Access to blogging
 app.use("/api/users",userRouter);
 app.use("/api/posts",postRouter);
 app.get('/user', (req, res) => {

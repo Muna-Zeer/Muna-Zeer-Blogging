@@ -269,7 +269,7 @@ module.exports.displayPostDetails = async (req, res) => {
     }
 
     const username = decodedToken.username;
-
+ 
     const post = await Post.findAll({
       include: [{ model: User }, { model: Category }, { model: Comment }],
     });
