@@ -1,5 +1,4 @@
-
-const { Post, Category, Comment,User } = require("../models");
+const { Post, Category, Comment, User } = require("../models");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const { Op } = require("sequelize");
@@ -21,6 +20,7 @@ module.exports.uploadFile = async (req, res) => {
 // Create new post
 module.exports.CreatePost = async (req, res) => {
   try {
+    console.log("req.file:", req.file);
     const imageUrl = req.file.filename;
     console.log("image", imageUrl);
 
@@ -29,9 +29,9 @@ module.exports.CreatePost = async (req, res) => {
       content: req.body.content,
       imageUrl: imageUrl,
       publishedAt: req.body.publishedAt,
-      // userId: req.user.id, 
+      // userId: req.user.id,
     });
- 
+
     console.log("newPost");
     res.status(201).json(newPost);
   } catch (error) {
@@ -43,8 +43,11 @@ module.exports.CreatePost = async (req, res) => {
 module.exports.getAllPost = async (req, res) => {
   try {
     const allPosts = await Post.findAll();
-
-    res.render("postList", { posts: allPosts });
+    if (req.headers["user-agent"].includes("Postman")) {
+      res.status(200).json(allPosts);
+    } else {
+      res.render("postList", { posts: allPosts });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json({ error });
@@ -65,7 +68,13 @@ module.exports.addPostCategory = async (req, res) => {
   try {
     const { postId } = req.params;
     const { categories } = req.body;
+    console.log("Request Body:", req.body);
+
     console.log("Received Categories:", categories);
+
+// if(!Array.isArray(categories)){
+//   return res.status(400).json({error:"Categories must be an array"});
+// }
 
     const post = await Post.findByPk(postId);
     if (!post) {
@@ -103,11 +112,15 @@ module.exports.getCategory = async (req, res) => {
     const { postId } = req.params;
     const { categories } = req.body;
     const post = await Post.findByPk(postId);
+    console.log("post", post);
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
-
-    res.render("addCategoryForm", { postId: postId });
+    if (req.headers["user-agent"].includes("Postman")) {
+      res.status(200).json(categories);
+    } else {
+      res.render("addCategoryForm", { postId: postId });
+    }
   } catch (error) {
     console.error("Error fetching post:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -127,8 +140,12 @@ module.exports.getCategoryPost = async (req, res) => {
 
     const categories = await post.getCategories();
 
-    // res.status(200).json(categories);
-    res.render("getPostCategory", { categories });
+    if (req.headers["user-agent"].includes("Postman")) {
+      res.status(200).json({ categories });
+    } else {
+      // res.status(200).json(categories);
+      res.render("getPostCategory", { categories });
+    }
   } catch (error) {
     console.error("Error getting categories for post:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -145,11 +162,14 @@ module.exports.getPostEditPage = async (req, res) => {
       console.error("Post not found");
       return res.status(404).json({ error: "post not found" });
     }
-
-    res.render("updatePost", { post });
+    if (req.headers["user-agent"].includes("Postman")) {
+      res.status(200).json(post);
+    } else {
+      res.render("updatePost", { post });
+    }
   } catch (error) {
     console.error("Error getting post by ID:", error);
-    res.status(500).json({ error: "Unable to fetch post" });
+    res.status(500).json({ error });
   }
 };
 
@@ -225,10 +245,10 @@ module.exports.createComment = async (req, res) => {
 //Get comments for specific post
 module.exports.getCommentsPost = async (req, res) => {
   const { postId } = req.params;
-  console.log("Post ID:", postId); 
+  console.log("Post ID:", postId);
   try {
     const comments = await Comment.findAll({ where: { postId } });
-    console.log("Comments:", comments); 
+    console.log("Comments:", comments);
     res.status(200).json({ comments });
   } catch (error) {
     console.error("Error getting comments:", error);
@@ -238,11 +258,11 @@ module.exports.getCommentsPost = async (req, res) => {
 
 // module.exports.displayPostDetails = async (req, res) => {
 //   try {
-//     const token = req.cookies.token; 
-//     console.log("Token:", token); 
+//     const token = req.cookies.token;
+//     console.log("Token:", token);
 //     const decodedToken = jwt.decode(token);
 //     const username = decodedToken.username;
-//     console.log("Username:", username); 
+//     console.log("Username:", username);
 //     const post = await Post.findAll({
 //       include: [{ model: User, where: { username } }, { model: Category }, { model: Comment }],
 //     });
@@ -257,25 +277,28 @@ module.exports.getCommentsPost = async (req, res) => {
 module.exports.displayPostDetails = async (req, res) => {
   try {
     const token = req.cookies.token;
-    
+
     if (!token) {
-      throw new Error('Token not found');
+      throw new Error("Token not found");
     }
 
     const decodedToken = jwt.decode(token);
-    
+
     if (!decodedToken || !decodedToken.username) {
-      throw new Error('Invalid token or username not found');
+      throw new Error("Invalid token or username not found");
     }
 
     const username = decodedToken.username;
- 
+
     const post = await Post.findAll({
       include: [{ model: User }, { model: Category }, { model: Comment }],
     });
-    
-    res.render('postDetails', { post, username });
-    
+    if (req.headers["user-agent"].includes("Postman")) {
+      res.status(200).json(post);
+    } else {
+      res.render("postDetails", { post, username });
+    }
+
     console.log("reg", req);
   } catch (error) {
     console.error("Error getting posts with associated data:", error);
@@ -283,20 +306,20 @@ module.exports.displayPostDetails = async (req, res) => {
   }
 };
 
-module.exports.getPostDetailsById=async(req,res)=>{
-  const {postId}=req.params;
-  console.log("reg",req);
+module.exports.getPostDetailsById = async (req, res) => {
+  const { postId } = req.params;
+  console.log("reg", req);
   try {
-    const post = await Post.findByPk(postId,{
+    const post = await Post.findByPk(postId, {
       include: [{ model: User }, { model: Category }, { model: Comment }],
     });
     if (!post) {
-      return res.status(404).json({ error: 'Post not found' });
+      return res.status(404).json({ error: "Post not found" });
     }
 
-    res.status(200).json({post});
+    res.status(200).json({ post });
   } catch (error) {
-    console.error('Error getting post details:', error);
-    res.status(500).json({ error: 'Unable to get post details' });
+    console.error("Error getting post details:", error);
+    res.status(500).json({ error: "Unable to get post details" });
   }
-}
+};

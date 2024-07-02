@@ -46,11 +46,23 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  fileFilter: function (req, file, cb) {
+    const filetypes = /jpeg|jpg|png/;
+    const mimetype = filetypes.test(file.mimetype);
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    if (mimetype && extname) {
+      return cb(null, true);
+    }
+    cb('Error: Only images (jpeg/jpg/png) are allowed!');
+  }
+});
+
 
 const userRouter = express.Router();
 const postRouter = express.Router();
-userRouter.post("/createUser", createNewUser);
+userRouter.post("/createUser",upload.single('image'), createNewUser);
 
 
 userRouter.post('/loginUser', loginUser);
@@ -63,7 +75,7 @@ userRouter.post("/:userId/update", verifyToken,updateUserInfo);
 userRouter.delete("/:userId",verifyToken, deleteUserId);
 
 //Post routes
-postRouter.post("/newPost", upload.single("image"), CreatePost);
+postRouter.post("/newPost",upload.single('image'), CreatePost);
 postRouter.get("/allPosts", getAllPost);
 postRouter.post("/:postId/categories", verifyToken,addPostCategory);
 postRouter.get("/:postId/addCategory", verifyToken,getCategory);

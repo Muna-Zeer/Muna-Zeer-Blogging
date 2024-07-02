@@ -35,6 +35,7 @@ npm start
 ```
 * This will build the JavaScript code and start the Express server.
 ## Suggested API Structure
+- [Link to Postman Collection Documentation](https://documenter.getpostman.com/view/19971212/2sA3dxCqkB)
 
 ### /api/users
 - POST: Create a new user

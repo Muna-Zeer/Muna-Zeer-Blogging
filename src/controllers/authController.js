@@ -42,16 +42,21 @@ module.exports.createNewUser = async (req, res) => {
 //Login user to the website
 module.exports.loginUser = async (req, res) => {
   try {
-    const { password, identifier } = req.body;
-    console.log("Identifier:", identifier);
+    const { password, email } = req.body;
+    console.log("req.body",req.body);
+    // console.log("identifier:", identifier);
     console.log("Password:", password);
-
+if(!email||!password){
+  console.log("missing password or identifier");
+}
     let user;
-    if (validateEmail(identifier)) {
-      user = await User.findOne({ where: { email: identifier } });
-    } else if (validateUserName(identifier)) {
-      user = await User.findOne({ where: { username: identifier } });
-    } else {
+    if (validateEmail(email)) {
+      user = await User.findOne({ where: { email } });
+    } 
+    // else if (validateUserName(identifier)) {
+    //   user = await User.findOne({ where: { username: identifier } });
+    // }
+     else {
       return res.status(400).json({ error: "Invalid email or username" });
     }
 
@@ -74,7 +79,7 @@ module.exports.loginUser = async (req, res) => {
     const token = jwt.sign(
       { userId: user._id, username: user.username },
       secretKey,
-      { expiresIn: "1h" }
+      { expiresIn: "1d" }
     );
 console.log("secretKey",secretKey);
 res.cookie("token", token, { httpOnly: true });

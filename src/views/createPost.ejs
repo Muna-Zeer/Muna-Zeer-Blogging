@@ -1,42 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="/styles.css">
-    </head>
-  <body>
-    <h1>Create new Post</h1>
-    <div class="allPost">
-
-    <form class="allform"
-    action="/api/posts/newPost"
-    method="post"
-    enctype="multipart/form-data"
-  >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create new Post</title>
+</head>
+<body>
+  <h1>Create new Post</h1>
+  <form action="/api/posts/newPost" method="post" enctype="multipart/form-data">
     <label for="title">Title:</label>
     <input type="text" name="title" id="title" />
+    <br />
     <label for="content">Content:</label>
-    <textarea
-      name="content"
-      id="content"
-      cols="30"
-      rows="20"
-      required
-    ></textarea>
-    <label for="image">Upload Image</label>
+    <textarea name="content" id="content" cols="30" rows="10"></textarea>
+    <br />
+    <label for="image">Upload Image:</label>
     <input type="file" name="image" id="image" />
+    <br />
     <label for="publishedAt">Published At:</label>
-    <input type="datetime-local" id="publishedAt" name="publishedAt" id="publishedAt"/>
-
-<button type="submit">Create Post</button>
+    <input type="datetime-local" id="publishedAt" name="publishedAt" />
+    <br />
+    <button type="submit">Create Post</button>
   </form>
-  
-</div>
-<script>
-const currentTime=new Date().toISOString.slice(0,14);
-document.getElementById("publishedAt").min=currentTime;
-</script>
-  </body>
+</body>
 </html>

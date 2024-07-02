@@ -1,11 +1,13 @@
 const express = require("express");
 const app = express();
 const path=require("path");
+
+const bodyParser=require('body-parser')
 const {userRouter,postRouter} =require("../src/routes/router")
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 app.use(express.json());
-// Import all models
+app.use(bodyParser.urlencoded({ extended: true }));
 const sequelize = require("./models/main");
 const exp = require("constants");
 
@@ -49,7 +51,7 @@ app.get('/', (req, res) => {
 
 
 // Sync database
-sequelize.sync({ alter: true })
+sequelize.sync({ alter: false })
   .then(() => {
     console.log("Database synced successfully");
     const PORT = process.env.PORT || 3000;

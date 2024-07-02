@@ -10,7 +10,7 @@ const validateEmail=(email)=>{
 // Validate Password 
 const validatePassword=(password)=>{
     //Use regular  expression to validate the password
-const passwordRegex=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{16,}$/;
+const passwordRegex=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     return passwordRegex.test(password);
 }
 
